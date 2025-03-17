@@ -4,32 +4,32 @@
 
 using namespace std;
 
-// Función para imprimir un arreglo
 
-// Función de ordenamiento por inserción
+
+
 void insertionSort(int array[], int size) {
-  clock_t start_time = clock(); // Inicio del temporizador
+  clock_t start_time = clock(); 
   for (int step = 1; step < size; step++) {
     int key = array[step];
     int j = step - 1;
 
-    // Compara la clave con cada elemento a la izquierda de ella hasta que encuentre un elemento más pequeño
+    
     while (j >= 0 && key < array[j]) {
       array[j + 1] = array[j];
       --j;
     }
     array[j + 1] = key;
 
-    // Mostrar el arreglo después de cada paso de inserción
+    
     cout << "Iteración " << step << ": ";
     printArray(array, size);
   }
-  clock_t end_time = clock(); // Fin del temporizador
-  double elapsed_time = double(end_time - start_time) / CLOCKS_PER_SEC; // Calcular tiempo en segundos
+  clock_t end_time = clock(); 
+  double elapsed_time = double(end_time - start_time) / CLOCKS_PER_SEC; 
   cout << "Tiempo total de ordenamiento: " << elapsed_time << " segundos" << endl;
 }
 
-// Función para leer los datos desde el archivo "Array.txt"
+
 bool leerDesdeArchivo(int array[], int& size) {
   ifstream archivo("Array.txt");
   if (archivo.is_open()) {
@@ -44,7 +44,7 @@ bool leerDesdeArchivo(int array[], int& size) {
   return false;
 }
 
-// Función para leer los datos desde el teclado
+
 void leerDesdeTeclado(int array[], int& size) {
   cout << "¿Cuántos elementos quieres ingresar? ";
   cin >> size;
@@ -54,9 +54,9 @@ void leerDesdeTeclado(int array[], int& size) {
   }
 }
 
-// Función principal
+
 int callInsertion(){
-  int data[100];  // Arreglo de tamaño fijo 100, puedes ajustar este valor según sea necesario
+  int data[100];  
   int size = 0;
 
   int opcion;
@@ -69,7 +69,7 @@ int callInsertion(){
 
   switch(opcion) {
     case 1:
-      // Valores predefinidos
+      
       {
         int predefinidos[] = {9, 5, 1, 4, 3};
         size = sizeof(predefinidos) / sizeof(predefinidos[0]);
@@ -82,7 +82,7 @@ int callInsertion(){
       break;
       
     case 2:
-      // Intentamos leer desde el archivo primero
+      
       if (!leerDesdeArchivo(data, size)) {
         cout << "No se encontró el archivo 'array.txt'.\n";
       } else {
@@ -92,7 +92,7 @@ int callInsertion(){
       break;
       
     case 3:
-      // Leer desde teclado
+    
       leerDesdeTeclado(data, size);
       break;
       
@@ -101,14 +101,14 @@ int callInsertion(){
       return 1;
   }
 
-  // Imprimir el arreglo original
+ 
   cout << "\nArreglo original:\n";
   printArray(data, size);
 
-  // Ordenar el arreglo
+  
   insertionSort(data, size);
 
-  // Imprimir el arreglo ordenado
+ 
   cout << "Arreglo ordenado en orden ascendente:\n";
   printArray(data, size);
 

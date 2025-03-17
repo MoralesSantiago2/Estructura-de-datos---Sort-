@@ -5,7 +5,7 @@ using namespace std;
 using namespace std::chrono;
 
 
-// Función para combinar dos subarrays en Merge Sort
+
 void merge(int array[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
@@ -25,7 +25,7 @@ void merge(int array[], int left, int mid, int right) {
     while (j < n2) array[k++] = R[j++];
 }
 
-// Función auxiliar recursiva para Merge Sort
+
 void mergeSortHelper(int array[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
@@ -35,12 +35,11 @@ void mergeSortHelper(int array[], int left, int right) {
     }
 }
 
-// Función principal de Merge Sort
+
 void mergeSort(int array[], int size) {
     mergeSortHelper(array, 0, size - 1);
 }
 
-// Menú para Merge Sort con cronómetro
 void merge_sort() {
     cout << "--- Seleccione el modo de entrada ---\n";
     cout << "1. Array quemado\n2. Array por teclado\n3. Array por archivo\n";
@@ -48,24 +47,24 @@ void merge_sort() {
     int mode;
     cin >> mode;
 
-    int data[100]; // Tamaño máximo de 100 (puedes cambiarlo según sea necesario)
+    int data[100]; 
     int size = 0;
 
     if (mode == 1) {
-        // Array quemado
+        
         int temp[] = {20, 12, 10, 15, 2};
         size = sizeof(temp) / sizeof(temp[0]);
         for (int i = 0; i < size; i++) data[i] = temp[i];
 
     } else if (mode == 2) {
-        // Array por teclado
+        
         cout << "Ingrese el tamaño del array: ";
         cin >> size;
         cout << "Ingrese los elementos:\n";
         for (int i = 0; i < size; i++) cin >> data[i];
 
     } else if (mode == 3) {
-        // Array por archivo
+       
         ifstream inputFile("array.txt");
         if (!inputFile) {
             cout << "Error al abrir el archivo.\n";
@@ -79,20 +78,18 @@ void merge_sort() {
         return;
     }
 
-    // Mostrar array original
+   
     cout << "\n--- Array original ---\n";
     printArray(data, size);
 
-    // Iniciar cronómetro
+    
     auto start = high_resolution_clock::now();
 
-    // Ordenar con Merge Sort
     mergeSort(data, size);
 
-    // Detener cronómetro
     auto stop = high_resolution_clock::now();
 
-    // Mostrar resultados
+    
     cout << "\n--- Array ordenado ---\n";
     printArray(data, size);
 
@@ -100,7 +97,7 @@ void merge_sort() {
     cout << "--- Tiempo de ejecución: " << duration.count() << " microsegundos\n";
 }
 
-// Función principal
+
 int callMerge() {
     merge_sort();
     return 0;

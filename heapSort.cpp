@@ -2,36 +2,36 @@
 #include "heapSort.h"
 using namespace std;
 using namespace std::chrono;
-// Función para mantener la propiedad de Heap
-void heapify(int arr[], int n, int i) {
-    int largest = i; // Inicializa el nodo raíz como el más grande
-    int left = 2 * i + 1; // Índice del hijo izquierdo
-    int right = 2 * i + 2; // Índice del hijo derecho
 
-    // Verifica si el hijo izquierdo es mayor que la raíz
+void heapify(int arr[], int n, int i) {
+    int largest = i; 
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2; 
+
+    
     if (left < n && arr[left] > arr[largest])
         largest = left;
     
-    // Verifica si el hijo derecho es mayor que el mayor hasta ahora
+    
     if (right < n && arr[right] > arr[largest])
         largest = right;
 
-    // Si el mayor no es la raíz, intercambia y continúa el heapify
+    
     if (largest != i) {
         swap(arr[i], arr[largest]);
         heapify(arr, n, largest);
     }
 }
-// Implementación de Heap Sort
+
 void heapSort(int arr[], int n) {
-    // Construir el Heap máximo
+    
     for (int i = n / 2 - 1; i >= 0; i--)
         heapify(arr, n, i);
 
-    // Extraer elementos uno por uno del heap
+   
     for (int i = n - 1; i >= 0; i--) {
-        swap(arr[0], arr[i]); // Mueve la raíz al final
-        heapify(arr, i, 0); // Llama a heapify en el subárbol reducido
+        swap(arr[0], arr[i]); 
+        heapify(arr, i, 0); 
     }
 }
 int callHeap() {

@@ -2,42 +2,34 @@
 #include "quickSort.h"
 
 #include <iostream>
-#include <iomanip> // Para mostrar el tiempo en notaci—n cient’fica
-#include <ctime>   // Para medir el tiempo de ejecuci—n
+#include <iomanip> 
+#include <ctime>   
 
 using namespace std;
 
-/**
- * Funcion para dividir el arreglo en dos partes y colocar el pivote en su posicion correcta.
- */
 int partition(int arr[], int low, int high) {
-    int pivot = arr[high]; // Se elige el ultimo elemento como pivote
-    int i = low - 1; // Indice del menor elemento
+    int pivot = arr[high]; 
+    int i = low - 1; 
 
     for (int j = low; j < high; j++) {
         if (arr[j] < pivot) { 
-            i++; // Incrementa el indice del menor elemento
-            swap(arr[i], arr[j]); // Intercambia elementos
+            i++; 
+            swap(arr[i], arr[j]);
         }
     }
-    swap(arr[i + 1], arr[high]); // Coloca el pivote en su posicion correcta
+    swap(arr[i + 1], arr[high]); 
     return i + 1;
 }
 
-/**
- * Funcion recursiva de Quicksort.
- */
 void quicksort(int arr[], int low, int high) {
     if (low < high) {
-        int pi = partition(arr, low, high); // Encuentra el indice del pivote
+        int pi = partition(arr, low, high); 
         quicksort(arr, low, pi - 1);
         quicksort(arr, pi + 1, high);
     }
 }
 
-/**
- * Implementaci—n iterativa de Quicksort.
- */
+
 void quicksortIterativo(int arr[], int low, int high) {
     int stack[high - low + 1];
     int top = -1;

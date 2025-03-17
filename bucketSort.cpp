@@ -1,20 +1,20 @@
 #include "funcionesGlobales.h"
 #include "bucketSort.h"
 
-#define NBUCKET 6  // Número de buckets
-#define INTERVAL 10  // Capacidad de cada bucket
+#define NBUCKET 6 
+#define INTERVAL 10 
 using namespace std;
 using namespace std::chrono;
-// Estructura para los nodos de la lista enlazada
+
 struct Node {
     int data;
     struct Node *next;
 };
-// Función de ordenamiento por Bucket Sort
+
 void bucketSort(int arr[], int n) {
     Node *buckets[NBUCKET] = {nullptr};
 
-    // Distribuir los elementos en los buckets
+   
     cout << "\nDistribuyendo elementos en los buckets..." << endl;
     for (int i = 0; i < n; i++) {
         int pos = getBucketIndex(arr[i]);
@@ -23,19 +23,19 @@ void bucketSort(int arr[], int n) {
         cout << "Elemento " << arr[i] << " colocado en el bucket " << pos << endl;
     }
 
-    // Imprimir los buckets antes de ordenarlos
+   
     for (int i = 0; i < NBUCKET; i++) {
         cout << "Bucket[" << i << "] : ";
         printBuckets(buckets[i]);
         cout << endl;
     }
 
-    // Ordenar los elementos dentro de cada bucket
+    
     for (int i = 0; i < NBUCKET; i++) {
         buckets[i] = insertionSort(buckets[i]);
     }
 
-    // Imprimir los buckets después de ordenarlos
+  
     cout << "\nBuckets después de ordenar:" << endl;
     for (int i = 0; i < NBUCKET; i++) {
         cout << "Bucket[" << i << "] : ";
@@ -43,7 +43,7 @@ void bucketSort(int arr[], int n) {
         cout << endl;
     }
 
-    // Fusionar los elementos ordenados de los buckets en el array original
+   
     int index = 0;
     for (int i = 0; i < NBUCKET; i++) {
         Node *node = buckets[i];
@@ -55,7 +55,7 @@ void bucketSort(int arr[], int n) {
         }
     }
 }
-// Función de ordenamiento por inserción para cada bucket
+
 struct Node *insertionSort(struct Node *list) {
     if (!list || !list->next) return list;
 
@@ -77,11 +77,11 @@ struct Node *insertionSort(struct Node *list) {
     }
     return sorted;
 }
-// Función para obtener el índice del bucket correspondiente
+
 int getBucketIndex(int value) {
     return value / INTERVAL;
 }
-// Función para imprimir los elementos de un bucket
+
 void printBuckets(struct Node *list) {
     struct Node *cur = list;
     while (cur) {
@@ -144,7 +144,7 @@ int callBucket() {
     printArray(arr, size);
     cout << "--- Tiempo de ejecución: " << duration.count() << " microsegundos" << endl;
 
-    // Liberar memoria dinámica
+   
     delete[] arr;
 
     return 0;

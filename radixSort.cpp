@@ -5,11 +5,11 @@
 using namespace std;
 using namespace std::chrono;
 
-// Declaración de funciones
 
 
 
-// Obtiene el valor máximo en el array
+
+
 int getMax(int array[], int size) {
     int max = array[0];
     for (int i = 1; i < size; i++)
@@ -18,36 +18,36 @@ int getMax(int array[], int size) {
     return max;
 }
 
-// Ordena el array usando Counting Sort en base al dígito actual
+
 void countingSort(int array[], int size, int place) {
-    const int max = 10; // Para los dígitos (0-9)
+    const int max = 10; 
     int output[size];
     int count[max] = {0};
 
-    // Cuenta la frecuencia de cada dígito en la posición actual
+    
     for (int i = 0; i < size; i++)
         count[(array[i] / place) % 10]++;
 
-    // Calcula las posiciones acumulativas
+    
     for (int i = 1; i < max; i++)
         count[i] += count[i - 1];
 
-    // Construye el array ordenado
+    
     for (int i = size - 1; i >= 0; i--) {
         output[count[(array[i] / place) % 10] - 1] = array[i];
         count[(array[i] / place) % 10]--;
     }
 
-    // Copia los valores ordenados de vuelta al array original
+    
     for (int i = 0; i < size; i++)
         array[i] = output[i];
 }
 
-// Implementación de Radix Sort
+
 void radixSort(int array[], int size) {
     int max = getMax(array, size);
 
-    // Ordena el array aplicando Counting Sort para cada posición decimal
+    
     for (int place = 1; max / place > 0; place *= 10)
         countingSort(array, size, place);
 }
@@ -64,12 +64,12 @@ int callRadix(){
     int size;
     
     if (opcion == 1) {
-        // Opción de array predefinido
+        
         int data[] = {170, 45, 75, 90, 802, 24, 2, 66};
         size = sizeof(data) / sizeof(data[0]);
         arr = data;
     } else if (opcion == 2) {
-        // Opción de ingreso manual
+       
         cout << "Ingrese el tamaño del array: ";
         cin >> size;
         arr = new int[size];
@@ -78,7 +78,7 @@ int callRadix(){
             cin >> arr[i];
         }
     } else if (opcion == 3) {
-        // Opción de lectura desde archivo
+        
         ifstream inputFile("array.txt");
         if (!inputFile) {
             cout << "Error: No se pudo abrir el archivo." << endl;
@@ -98,7 +98,7 @@ int callRadix(){
     cout << "--- El Array original fue: \n";
     printArray(arr, size);
     
-    // Medir el tiempo de ejecución
+    
     auto start = high_resolution_clock::now();
     radixSort(arr, size);
     auto stop = high_resolution_clock::now();
