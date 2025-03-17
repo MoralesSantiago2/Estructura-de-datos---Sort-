@@ -1,94 +1,93 @@
 #include "funcionesGlobales.h"
 #include "heapSort.h"
+#include <iostream>
+#include <sys/timeb.h> 
+#include <fstream>
+
 using namespace std;
-using namespace std::chrono;
 
-void heapify(int arr[], int n, int i) {
-    int largest = i; 
-    int left = 2 * i + 1; 
-    int right = 2 * i + 2; 
+void ajustarMonticulo(int arr[], int n, int i) {
+    int mayor = i;
+    int izquierda = 2 * i + 1;
+    int derecha = 2 * i + 2;
 
+    if (izquierda < n && arr[izquierda] > arr[mayor])
+        mayor = izquierda;
     
-    if (left < n && arr[left] > arr[largest])
-        largest = left;
-    
-    
-    if (right < n && arr[right] > arr[largest])
-        largest = right;
+    if (derecha < n && arr[derecha] > arr[mayor])
+        mayor = derecha;
 
-    
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-        heapify(arr, n, largest);
+    if (mayor != i) {
+        swap(arr[i], arr[mayor]);
+        ajustarMonticulo(arr, n, mayor);
     }
 }
 
-void heapSort(int arr[], int n) {
-    
+void ordenarMonticulo(int arr[], int n) {
     for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(arr, n, i);
+        ajustarMonticulo(arr, n, i);
 
-   
     for (int i = n - 1; i >= 0; i--) {
-        swap(arr[0], arr[i]); 
-        heapify(arr, i, 0); 
+        swap(arr[0], arr[i]);
+        ajustarMonticulo(arr, i, 0);
     }
 }
-int callHeap() {
+
+int ejecutarHeap() {
     int opcion;
     cout << "Seleccione el modo de entrada:\n";
-    cout << "1. Array quemado\n";
+    cout << "1. Array predeterminado\n";
     cout << "2. Ingresar valores manualmente\n";
     cout << "3. Leer desde archivo\n";
     cin >> opcion;
     
-    int *arr;
-    int size;
+    int *arr = nullptr;
+    int size = 0;
     
     if (opcion == 1) {
-        int data[] = {1, 12, 9, 5, 6, 10};
-        size = sizeof(data) / sizeof(data[0]);
-        arr = data;
+        size = 6;
+        arr = new int[size]{1, 12, 9, 5, 6, 10};
     } else if (opcion == 2) {
         cout << "Ingrese el tamaño del array: ";
         cin >> size;
         arr = new int[size];
-        cout << "Ingrese los elementos del array: ";
+        cout << "Ingrese los elementos: ";
         for (int i = 0; i < size; i++) {
             cin >> arr[i];
         }
     } else if (opcion == 3) {
-        ifstream inputFile("array.txt");
-        if (!inputFile) {
+        ifstream archivo("array.txt");
+        if (!archivo) {
             cout << "Error: No se pudo abrir el archivo." << endl;
             return 1;
         }
-        inputFile >> size;
+        archivo >> size;
         arr = new int[size];
         for (int i = 0; i < size; i++) {
-            inputFile >> arr[i];
+            archivo >> arr[i];
         }
-        inputFile.close();
+        archivo.close();
     } else {
         cout << "Opción no válida." << endl;
         return 1;
     }
     
     cout << "--- El Array original fue: \n";
-    printArray(arr, size);
+    mostrarArray(arr, size);
     
-    auto start = high_resolution_clock::now();
-    heapSort(arr, size);
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    
+    struct timeb inicio, fin;
+    ftime(&inicio);
+
+    ordenarMonticulo(arr, size);
+
+    ftime(&fin);
+    int tiempoTotal = (int)(1000 * (fin.time - inicio.time) + (fin.millitm - inicio.millitm));
+
     cout << "--- El Array ordenado es:\n";
-    printArray(arr, size);
-    cout << "--- Tiempo de ejecución: " << duration.count() << " microsegundos" << endl;
+    mostrarArray(arr, size);
+    cout << "--- Tiempo de ejecución: " << tiempoTotal << " ms" << endl;
     
-    if (opcion == 2 || opcion == 3) {
-        delete[] arr;
-    }
+    delete[] arr;
     
     return 0;
 }
